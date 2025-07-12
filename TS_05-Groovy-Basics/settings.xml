@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testSuite xmlns:con="http://eviware.com/soapui/config" id="fe9d333a-6e21-4fc7-bf52-cb8ed627a3c9" name="TS_05 Groovy Basics">
+  <con:settings>
+    <con:setting id="fe9d333a-6e21-4fc7-bf52-cb8ed627a3c9fileName">TS_05-Groovy-Basics</con:setting>
+  </con:settings>
+  <con:runType>SEQUENTIAL</con:runType>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testSuite>

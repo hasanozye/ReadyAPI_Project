@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testSuite xmlns:con="http://eviware.com/soapui/config" id="888640d4-d076-41be-9f48-dd5e89e16f60" name="TS_Working with data source">
+  <con:settings id="78e7f101-c6ce-4ddc-ac5f-7d4a94f7675b">
+    <con:setting id="888640d4-d076-41be-9f48-dd5e89e16f60fileName">TS_Working-with-data-source</con:setting>
+  </con:settings>
+  <con:runType>SEQUENTIAL</con:runType>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testSuite>

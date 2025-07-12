@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase xmlns:con="http://eviware.com/soapui/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="e1e39dcb-7fd3-48b9-846a-2c5f48a05c6d" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="TC01_Working With Grid" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" zephyrTestName="" zephyrTestId="">
+  <con:settings>
+    <con:setting id="e1e39dcb-7fd3-48b9-846a-2c5f48a05c6dfileName">TC01_Working-With-Grid</con:setting>
+  </con:settings>
+  <con:testStep type="datasource" name="DataSource-Grid" id="586337fd-7af1-4f44-94ec-9611f41d39a9">
+    <con:settings/>
+    <con:config xsi:type="con:DataSourceStep">
+      <con:dataSource type="Grid">
+        <con:configuration>
+          <check><![CDATA[<xml-fragment><con:entry xmlns:con="http://eviware.com/soapui/config">true</con:entry><con:entry xmlns:con="http://eviware.com/soapui/config">true</con:entry><con:entry xmlns:con="http://eviware.com/soapui/config">true</con:entry></xml-fragment>]]></check>
+          <row><![CDATA[<xml-fragment><con:entry xmlns:con="http://eviware.com/soapui/config">55010111</con:entry><con:entry xmlns:con="http://eviware.com/soapui/config">ESSEDE5F550</con:entry><con:entry xmlns:con="http://eviware.com/soapui/config"/></xml-fragment>]]></row>
+          <row><![CDATA[<xml-fragment><con:entry xmlns:con="http://eviware.com/soapui/config">55010424</con:entry><con:entry xmlns:con="http://eviware.com/soapui/config">AARBDE5W550</con:entry><con:entry xmlns:con="http://eviware.com/soapui/config"/></xml-fragment>]]></row>
+          <row><![CDATA[<xml-fragment><con:entry xmlns:con="http://eviware.com/soapui/config">55010800</con:entry><con:entry xmlns:con="http://eviware.com/soapui/config">ISBRDE51XXX</con:entry><con:entry xmlns:con="http://eviware.com/soapui/config"/></xml-fragment>]]></row>
+          <recognizeAsPlainText>true</recognizeAsPlainText>
+        </con:configuration>
+      </con:dataSource>
+      <con:shared>true</con:shared>
+      <con:restartShared>true</con:restartShared>
+      <con:property>blz_code</con:property>
+      <con:property>expected_bic</con:property>
+      <con:completeLastOperation>true</con:completeLastOperation>
+      <con:restartOnRun>true</con:restartOnRun>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" id="225b678b-afa3-4bfe-8b45-28a5334207cf" name="getBank">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep">
+      <con:interface>blzServiceSoapBinding</con:interface>
+      <con:operation>getBank</con:operation>
+      <con:request name="getBank" id="74fb20b4-e646-44ab-a02c-bc39406472da">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>http://localhost:8080/services/blzService</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:blz="http://thomas-bayer.com/blz/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <blz:getBank>\r
+         <blz:blz>${DataSource-Grid#blz_code}</blz:blz>\r
+      </blz:getBank>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="Valid HTTP Status Codes" id="4c485b70-82ee-4321-9f07-f1c2108b6dba" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="SOAP Fault Assertion" id="3d09e159-b997-4639-8b52-d1cbcebd7dec" name="Not SOAP Fault"/>
+        <con:assertion type="Schema Compliance" id="2df4c05e-b76a-41d9-932e-e3416d39c19a" name="Schema Compliance">
+          <con:configuration/>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="cc5dc636-005c-4289-9cb0-a9c91274a990" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://thomas-bayer.com/blz/';
+//ns1:getBankResponse[1]/ns1:details[1]/ns1:bic[1]</path>
+            <content>${DataSource-Grid#expected_bic}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig action="http://www.springframework.org/schema/beans/BLZServicePortType/getBank" mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Groovy Script - Req and Response Body" id="3201b8f9-1581-4bfc-9f2c-82d69a04e092">
+    <con:settings/>
+    <con:config>
+      <script>def requestBody = context.testCase.testSteps["getBank"].testRequest.requestContent
+def responseBody = context.testCase.testSteps["getBank"].testRequest.responseContent
+
+log.info "=== REQUEST === \n$requestBody"
+log.info "=== RESPONSE === \n$responseBody"</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="datasourceloop" name="Data Source Loop" id="0e07c3b0-1d90-411e-a8f6-a07ac49501d8">
+    <con:settings/>
+    <con:config>
+      <dataSourceStep>DataSource-Grid</dataSourceStep>
+      <targetStep>getBank</targetStep>
+      <discardResults>true</discardResults>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>586337fd-7af1-4f44-94ec-9611f41d39a9</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>0e07c3b0-1d90-411e-a8f6-a07ac49501d8</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>225b678b-afa3-4bfe-8b45-28a5334207cf</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

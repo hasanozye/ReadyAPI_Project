@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase xmlns:con="http://eviware.com/soapui/config" id="17133eb5-0b5a-458b-aa79-86257bdcae19" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TC_writing methods in groovy" searchProperties="true">
+  <con:settings>
+    <con:setting id="17133eb5-0b5a-458b-aa79-86257bdcae19fileName">TC_writing-methods-in-groovy</con:setting>
+  </con:settings>
+  <con:testStep type="groovy" name="Groovy Script" id="51693f9f-2fd3-4579-bbc4-69af9ee7f02c">
+    <con:settings/>
+    <con:config>
+      <script>
+def double calculateAreaofCricle(double radius){
+	return radius * radius * 3.14
+}
+
+double result
+
+result = calculateAreaofCricle(5)
+log.info "Result = $result"
+</script>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testCase>

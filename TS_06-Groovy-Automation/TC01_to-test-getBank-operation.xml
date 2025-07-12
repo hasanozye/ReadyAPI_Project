@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase xmlns:con="http://eviware.com/soapui/config" id="0aa82104-6c53-436b-a7b8-4d88dd1b12c4" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TC01_to test getBank operation" searchProperties="true">
+  <con:settings>
+    <con:setting id="0aa82104-6c53-436b-a7b8-4d88dd1b12c4fileName">TC01_to-test-getBank-operation</con:setting>
+  </con:settings>
+  <con:testStep type="request" id="ee40d2a0-dbf1-44dc-9563-c4341834b86a" name="getBank - Request with BLZ code 55010111">
+    <con:settings/>
+    <con:config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="con:RequestStep">
+      <con:interface>blzServiceSoapBinding</con:interface>
+      <con:operation>getBank</con:operation>
+      <con:request name="getBank - Request with BLZ code 55010111" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="4adf6ceb-c029-4e08-a43a-a1eeb94d0e41">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>http://localhost:8080/services/blzService</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:blz="http://thomas-bayer.com/blz/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <blz:getBank>\r
+         <blz:blz>55010111</blz:blz>\r
+      </blz:getBank>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="d1f8c806-989c-4fd1-a39a-1df7b16a5a45" name="SOAP Response"/>
+        <con:assertion type="Schema Compliance" id="4c0f3ccb-782a-4743-8b2a-7e90b4422b5f" name="Schema Compliance">
+          <con:configuration>
+            <definition/>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="SOAP Fault Assertion" id="a6ff9750-1fc9-41b5-bf20-d8c556ce17c8" name="Not SOAP Fault"/>
+        <con:assertion type="XPath Match" id="56a6db27-866c-4a30-8f28-5453e37ccf5e" name="validate bic code">
+          <con:configuration>
+            <path>declare namespace soap='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace ns1='http://thomas-bayer.com/blz/';
+//ns1:getBankResponse/ns1:details/ns1:bic</path>
+            <content>ESSEDE5F550</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="56a6db27-866c-4a30-8f28-5453e37ccf5e" name="validate plz code">
+          <con:configuration>
+            <path>declare namespace soap='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace ns1='http://thomas-bayer.com/blz/';
+//ns1:getBankResponse/ns1:details/ns1:plz</path>
+            <content>55116</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="56a6db27-866c-4a30-8f28-5453e37ccf5e" name="validate bezeichnung code">
+          <con:configuration>
+            <path>declare namespace soap='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace ns1='http://thomas-bayer.com/blz/';
+//ns1:getBankResponse/ns1:details/ns1:bezeichnung</path>
+            <content>SEB</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:username>${#Project#username}</con:username>
+          <con:password>${password}</con:password>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.springframework.org/schema/beans/BLZServicePortType/getBank"/>
+        <con:wsrmConfig version="1.2"/>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Groovy Script - Calling Test Step" id="0ef49317-5ff0-489f-b625-235cda19e005">
+    <con:settings/>
+    <con:config>
+      <script>import groovy.util.XmlSlurper
+
+// I want to call the test step
+def testStepName = 'getBank - Request with BLZ code 55010111'
+
+def testStep = testRunner.testCase.getTestStepByName(testStepName)
+log.info testStep
+
+//Run the test step
+def response = testStep.run(testRunner,context)
+log.info response
+
+// Create the şnstance of slırper
+def xmlSlurper = new XmlSlurper()
+
+//parse the response
+def envelope = xmlSlurper.parseText(response.responseContentAsXml)
+
+log.info envelope
+// Assert the web service response content.
+String expectedBICCode = 'ESSEDE5F550'
+String actualBICCode = envelope.Body.getBankResponse.details.bic
+
+log.warn "Actual BIC Code = $actualBICCode"
+
+assert expectedBICCode  == actualBICCode, "BIC Code is not matching, expected value is $expectedBICCode, but actual was $actualBICCode"</script>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testCase>

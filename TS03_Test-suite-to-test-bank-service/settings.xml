@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testSuite xmlns:con="http://eviware.com/soapui/config" id="1b6affd2-f928-4384-b89e-e17e762e7bc1" name="TS03_Test suite to test bank service">
+  <con:settings>
+    <con:setting id="1b6affd2-f928-4384-b89e-e17e762e7bc1fileName">TS03_Test-suite-to-test-bank-service</con:setting>
+  </con:settings>
+  <con:runType>SEQUENTIAL</con:runType>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testSuite>

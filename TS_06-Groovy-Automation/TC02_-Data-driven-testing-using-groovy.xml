@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase xmlns:con="http://eviware.com/soapui/config" id="c8ec420f-131a-46cb-8d48-4fdae9a8992d" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TC02_ Data driven testing using groovy" searchProperties="true">
+  <con:settings>
+    <con:setting id="c8ec420f-131a-46cb-8d48-4fdae9a8992dfileName">TC02_-Data-driven-testing-using-groovy</con:setting>
+  </con:settings>
+  <con:testStep type="request" id="d1226494-8e8b-420f-99cc-28fa44ea71ab" name="getBank" disabled="true">
+    <con:settings/>
+    <con:config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="con:RequestStep">
+      <con:interface>blzServiceSoapBinding</con:interface>
+      <con:operation>getBank</con:operation>
+      <con:request name="getBank" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="00bad750-9b88-4c90-b352-836435d15832">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>http://localhost:8080/services/blzService</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:blz="http://thomas-bayer.com/blz/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <blz:getBank>
+         <blz:blz>55020500</blz:blz>
+      </blz:getBank>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="219f66cf-c1eb-47ac-9168-a4ac17f9fad4" name="SOAP Response"/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.springframework.org/schema/beans/BLZServicePortType/getBank"/>
+        <con:wsrmConfig version="1.2"/>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Groovy Script - end to end testing" id="405efdfd-2914-46b7-af39-f461c5dc48f1">
+    <con:settings/>
+    <con:config>
+      <script>import com.eviware.soapui.support.GroovyUtils
+// Read bank service data from File
+File blzFile = new File("C:\\Users\\hozyer\\OneDrive - ONFTECH\\Desktop\\ivirzivir\\soapui\\blz_service_data.txt")
+String blz, bez, ort, plz, bic
+String bezInResponse, ortInResponse, plzInResponse, bicInResponse
+def lineData
+//create instance of GroovyUtils class.
+def groovyUtils = new GroovyUtils(context)
+def requestXmlHolder, responseXmlHolder
+//loop through file and create the content
+blzFile.eachLine { line ->
+
+    lineData = line.split(',')
+
+    blz = lineData[0]
+    bez = lineData[1]
+    bic = lineData[2]
+    ort = lineData[3]
+    plz = lineData[4]
+
+    log.info("BLZ: $blz, BEZ: $bez, BIC: $bic, ORT: $ort, PLZ: $plz")
+
+    groovyUtils = new com.eviware.soapui.support.GroovyUtils(context)
+    requestXmlHolder = groovyUtils.getXmlHolder("getBank#Request")
+    requestXmlHolder["//blz:blz"] = blz
+    requestXmlHolder.updateProperty()
+
+    testRunner.testCase.getTestStepByName('getBank').run(testRunner, context)
+
+    responseXmlHolder = groovyUtils.getXmlHolder("getBank#Response")
+
+    bezInResponse = responseXmlHolder["//ns1:bezeichnung"]
+    ortInResponse = responseXmlHolder["//ns1:ort"]
+    plzInResponse = responseXmlHolder["//ns1:plz"]
+    bicInResponse = responseXmlHolder["//ns1:bic"]
+
+    log.warn("RESPONSE -> bez: $bezInResponse, ort: $ortInResponse, plz: $plzInResponse, bic: $bicInResponse")
+
+    // 👇 ASSERT
+    assert bez == bezInResponse : "Expected bez '$bez' but got '$bezInResponse'"
+    assert bic == bicInResponse : "Expected bic '$bic' but got '$bicInResponse'"
+    assert ort == ortInResponse : "Expected ort '$ort' but got '$ortInResponse'"
+    assert plz == plzInResponse : "Expected plz '$plz' but got '$plzInResponse'"
+}
+</script>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testCase>

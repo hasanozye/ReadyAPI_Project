@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase xmlns:con="http://eviware.com/soapui/config" id="d6d298a7-5310-45b7-aff2-5b3edc999250" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TC01_Groovy Stuff" searchProperties="true">
+  <con:settings>
+    <con:setting id="d6d298a7-5310-45b7-aff2-5b3edc999250fileName">TC01_Groovy-Stuff</con:setting>
+  </con:settings>
+  <con:testStep type="groovy" name="Groovy Script - Groovy Basics" id="cc21cf0b-6f35-42e2-8961-89c125cd9bae">
+    <con:settings/>
+    <con:config>
+      <script>// variable declaration
+def name
+String firstName, lastName, country
+int age
+double salary
+
+firstName = 'John'
+lastName = 'Doe'
+salary  = 5000
+age = 25
+country = 'Poland'
+
+log.info ' first Name = ' + firstName
+log.info ' last Name = ' + lastName
+log.warn ' age = ' + age
+log.error ' salary = ' + salary
+log.info " country name = $country "</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Groovy Script - Conditions" id="b213e36c-36c8-44cc-becf-369c8ad5b426">
+    <con:settings/>
+    <con:config>
+      <script>boolean isPassed
+String grade
+
+isPassed  =  false
+
+// if  I pass the exam my dad will buy me a bike
+
+if (isPassed){	// evaluates a boolean expression
+	log.info 'Congratulations!!!'
+}else{
+	log.error 'Better luck next time '
+}
+
+// How can handle multiple scenarios/conditions?
+// A - Car
+// B - Bike
+// C - Nothing
+grade = 'C'
+
+if (grade == 'A'){
+	log.info 'You got Car!!'
+} else if (grade == 'B'){
+	log.warn 'You got a Bike!!!'
+}else{
+	log.error 'You got Nothing!!!'
+}
+</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Groovy Script  - Lists" id="9ebdb992-f7fc-4297-92a4-3ab5e8911390">
+    <con:settings/>
+    <con:config>
+      <script>String fruit, country
+
+fruit = 'Apple'
+fruit = 'Banana'
+
+def fruits = ['Apple','Banana','Grapes','Mango']
+
+log.info "Fruit name = $fruit"
+
+log.info "Fruits = $fruits"
+
+//Readign one by one entry in the list?
+
+
+fruits.each{
+	fruitName -> 
+	log.info "Name is $fruitName"
+}
+
+// I want to find out wheter my fruit list contains a fruit?
+String fruitIamLookingFor = 'Papaya'
+boolean hasFruitInsideIt =  fruits.contains(fruitIamLookingFor)
+
+
+if (hasFruitInsideIt){
+	log.info "Gotcha!! found $fruitIamLookingFor in the fruit list" 
+}else{
+	log.error "Can't find the fruit $fruitIamLookingFor in the fruit list"	
+}
+
+//During run time, can I add a fruit to the existing list?
+fruits.add('Papaya')
+fruits &lt;&lt; 'Pomegranate'
+
+hasFruitInsideIt =  fruits.contains(fruitIamLookingFor)
+
+log.info '-------------------After-------------------------------------'
+
+
+
+if (hasFruitInsideIt){
+	log.info "Gotcha!! found $fruitIamLookingFor in the fruit list" 
+}else{
+	log.error "Can't find the fruit $fruitIamLookingFor in the fruit list"	
+}
+
+//Remove papaya from the list
+fruits.remove('Papaya')
+
+hasFruitInsideIt =  fruits.contains(fruitIamLookingFor)
+
+log.info '-------------------After removing again-------------------------------------'
+
+
+
+if (hasFruitInsideIt){
+	log.info "Gotcha!! found $fruitIamLookingFor in the fruit list" 
+}else{
+	log.error "Can't find the fruit $fruitIamLookingFor in the fruit list"	
+}
+
+
+
+
+</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Groovy Script - Maps" id="559ee997-317c-4559-8278-2104723bb510">
+    <con:settings/>
+    <con:config>
+      <script>// How to define a map?
+def countries = ['QA':'Qatar',
+					'USA':'United States of America',
+					'SIN':'Singapore',
+					'AUS':'Australia',
+					'RUS':'Russia'
+					]
+// find a country in the map?
+String countryIamLookingFor = 'QA'
+
+boolean foundCountry = countries.containsKey(countryIamLookingFor)
+
+log.info "Found country $countryIamLookingFor ? : $foundCountry"
+// how can I get the country name for the given country code?
+
+String countryName = countries.get(countryIamLookingFor)
+
+if (foundCountry){
+log.info "Country name is = $countryName"	
+}else{
+	log.error "Sorry can't find the country"
+}
+
+//ADDING AN ENTRY TO THE MAP?
+countries.put('GB','Great Britain')
+
+log.info countries</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Groovy Script - Assertions" id="2e4a9c15-6ce0-4218-837d-944712b565c8">
+    <con:settings/>
+    <con:config>
+      <script>String expectedName, actualName
+
+expectedName = 'Jhon'
+actualName = 'Jhon'
+
+int a,b,c
+a = 10
+b = 10
+c = a+b
+
+log.info 'before Assertion'
+// assert &lt;expected value> == &lt;actual value>
+assert expectedName  == actualName,"names are not matching expected name is $expectedName but actual name was $actualName"
+assert 20 == c
+ log.info 'after assertion'
+
+ def fruits = ['Apple','Banana','Grapes','Mango']
+
+ assert true == fruits.contains('Apple'), "Can't find Apple in the list"</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Groovy Script - Reading project Artifacts" id="a6bb0e80-8c3a-4525-8d24-2d857c2592c0">
+    <con:settings/>
+    <con:config>
+      <script>// Project artifacts?
+log.info testRunner.testCase.name
+
+// Test Suite name?
+log.info testRunner.testCase.testSuite.name
+
+// Project name?
+log.info testRunner.testCase.testSuite.project.name
+
+//Workspace name?
+log.info testRunner.testCase.testSuite.project.workspace.name
+
+//how to access a test case from other test suite?
+log.info testRunner.
+			testCase.
+			testSuite.
+			project.
+			getTestSuiteByName('TS01_Test suite to test bank service').
+			getTestCaseByName('TC01_to test getBank operation').name
+
+
+//How to get hold of all test suites in project?
+log.info 'no of test suites : ' + testRunner.testCase.testSuite.project.testSuites.size()
+
+//I want to loop through all the test suites and print their names?
+def testSuiteMap = testRunner.testCase.testSuite.project.testSuites
+log.info testSuiteMap
+// loop throught the map and print the values
+
+testSuiteMap.each {
+	tsEntry ->
+	log.info tsEntry.key
+}
+
+</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Groovy Script - Reading Data From File" id="42cd5bca-4bcd-495d-8093-4a391f679629">
+    <con:settings/>
+    <con:config>
+      <script>def filePath = 'C:\\Users\\hozyer\\OneDrive - ONFTECH\\Desktop\\ivirzivir\\soapui\\blz_service_data.txt'
+File file = new File(filePath)
+
+// Loop throught the content of file and print them on log window.
+def blz, bezeichnung, ort, plz, bic
+file.eachLine {
+	line ->
+	log.info line
+	def lineData = line.split(',')
+	/**
+	 * 55010111,SEB,ESSEDE5F550,Mainz a Rhein,55116
+	 * lineData = ['55010111','SEB','ESSEDE5F550','Mainz a Rhein','55116']
+	 */
+	 blz = lineData[0] // blz code 
+	 bezeichnung = lineData[1]
+	 bic = lineData[2]
+	 ort = lineData[3]
+	 plz = lineData[4]
+	 log.warn "blz = $blz	, bezeichnung = $bezeichnung		, bic = $bic	, ort = $ort	, plz = $plz"
+}
+</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Groovy Script - Read data from excel sheet" id="9a9f8994-e7be-411d-8400-84f4557f32cb">
+    <con:settings/>
+    <con:config>
+      <script>// import the JXL libraries
+import jxl.*
+//Create a file instance
+def excelFilePath = "C:\\Users\\hozyer\\OneDrive - ONFTECH\\Desktop\\ivirzivir\\soapui\\BLZService.xls"
+File excelFile = new File(excelFilePath)
+
+//Create workbook instance
+Workbook workbook = Workbook.getWorkbook(excelFile)
+
+//Load the sheet
+Sheet sheet = workbook.getSheet(0)
+
+//I want to read the data in the sheet
+int numberOfRows = sheet.getRows()-1		// the number of rows in the excel
+log.info " numberOfRows = $numberOfRows"
+
+//need to loop through the records and print data 
+def blz,bic,bez,ort,plz
+
+for(int rowIdx in 1..numberOfRows){
+		//read the contents of the cell.
+		log.warn '-----------------------------------------------------'
+		blz = sheet.getCell(0,rowIdx).getContents()
+		bez = sheet.getCell(1,rowIdx).getContents()
+		bic = sheet.getCell(2,rowIdx).getContents()
+		ort = sheet.getCell(3,rowIdx).getContents()
+		plz = sheet.getCell(4,rowIdx).getContents()
+		log.info "blz = $blz	,bez = $bez	, bic = $bic	,ort = $ort	, plz = $plz"
+		
+}
+
+
+//close it
+workbook.close()</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Groovy Script - Methods" id="42c09f74-6767-42a2-8f49-951e6af6e2a7">
+    <con:settings/>
+    <con:config>
+      <script>def int  addNumbers(int a, int b){
+	return a+b;
+}
+def int subtractNumber(int a, int b){
+	return a-b
+}
+def int divideNumbers(int a , int b){
+	return a/b
+}
+def int multiplyNumbers(int a, int b ){
+	return a*b
+}
+
+int result
+
+result = addNumbers(10,20)
+log.info "result = $result"
+
+result = addNumbers(20,20)
+log.info "result = $result"
+
+result = multiplyNumbers(20,20)
+log.warn "result = $result"</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Groovy Script - Methods Part 2" id="7c7d4e10-e7c3-4cb1-9353-6ddd414d8d96">
+    <con:settings/>
+    <con:config>
+      <script>boolean isPassed
+String grade
+isPassed  =  true
+grade = 'A'
+
+printExamResult(isPassed,grade)
+
+//prints message based on exam result
+def void printExamResult(boolean isPassed, String grade){
+	if (isPassed){	// evaluates a boolean expression
+		//consider the grade only when passed
+		printGradeMessage(grade)
+	log.info 'Congratulations!!!'
+	}else{
+	log.error 'Better luck next time '
+	}	
+}
+//prints message for the given grade
+def void printGradeMessage(String grade){
+	if (grade == 'A'){
+	log.info 'You got Car!!'
+	} else if (grade == 'B'){
+	log.warn 'You got a Bike!!!'
+	}else{
+	log.error 'You got Nothing!!!'
+	}
+}
+
+
+// How can handle multiple scenarios/conditions?
+// A - Car
+// B - Bike
+// C - Nothing
+</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Groovy Script - SQL" id="c6ab1382-2d3c-4c78-ad4b-c5d1712a2e6f">
+    <con:settings/>
+    <con:config>
+      <script>import groovy.sql.Sql
+com.eviware.soapui.support.GroovyUtils.registerJdbcDriver( "com.mysql.jdbc.Driver" )
+String sqlStmt = 'SELECT * FROM blz_data'
+def databaseUrl = 'jdbc:mysql://localhost:3306/demo'
+def username = 'root'
+def password = '1234'
+def driverName = 'com.mysql.cj.jdbc.Driver'
+
+def blz,bic,bezeichnung,ort,plz
+def sql = Sql.newInstance(databaseUrl, username, password, driverName)
+
+sql.eachRow(sqlStmt) { 
+	row ->
+    blz = row['blz_code']
+    bic = row['bic_code']
+    bezeichnung = row['bezeichnung']
+    ort = row['ort']
+    plz = row['plz']
+    log.info "blz = $blz,	bic = $bic,	bezeichnung=$bezeichnung,	ort=$ort	,	plz=$plz"
+}
+</script>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testCase>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testSuite xmlns:con="http://eviware.com/soapui/config" id="057e7d50-c346-41c2-8ea9-d6380c229fea" name="TS_Learning Groovy Script">
+  <con:settings>
+    <con:setting id="057e7d50-c346-41c2-8ea9-d6380c229feafileName">TS_Learning-Groovy-Script</con:setting>
+  </con:settings>
+  <con:runType>SEQUENTIAL</con:runType>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testSuite>

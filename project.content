@@ -1,0 +1,15 @@
+blzServiceSoapBinding\getBank.xml
+medicareSupplierServiceSoapBinding\GetSupplierByCity.xml
+medicareSupplierServiceSoapBinding\GetSupplierBySupplyType.xml
+medicareSupplierServiceSoapBinding\GetSupplierByZipCode.xml
+TS01_Test-suite-to-test-bank-service\TC01_to-test-getBank-operation.xml
+TS01_Test-suite-to-test-bank-service\TC02_to-test-getBank-operation.xml
+TS02_Test-suite-to-test-bank-service\TC03_to-test-getBank-operation.xml
+TS03_Test-suite-to-test-bank-service\TC01_to-test-getBank-operation.xml
+TS03_Test-suite-to-test-bank-service\TC02_to-test-getBank-operation.xml
+TS04-test-suite-for-suppleir-service\TC01_SupplierByZipCode.xml
+TS_05-Groovy-Basics\TC01_Groovy-Stuff.xml
+TS_06-Groovy-Automation\TC01_to-test-getBank-operation.xml
+TS_06-Groovy-Automation\TC02_-Data-driven-testing-using-groovy.xml
+TS_Learning-Groovy-Script\TC_writing-methods-in-groovy.xml
+TS_Working-with-data-source\TC01_Working-With-Grid.xml

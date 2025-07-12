@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testSuite xmlns:con="http://eviware.com/soapui/config" id="eaae4aca-dd02-4efe-b170-fa0610f03182" name="TS01_Test suite to test bank service">
+  <con:settings>
+    <con:setting id="eaae4aca-dd02-4efe-b170-fa0610f03182fileName">TS01_Test-suite-to-test-bank-service</con:setting>
+  </con:settings>
+  <con:runType>SEQUENTIAL</con:runType>
+  <con:properties>
+    <con:property>
+      <con:name>blzCode</con:name>
+      <con:value>55010424</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+</con:testSuite>

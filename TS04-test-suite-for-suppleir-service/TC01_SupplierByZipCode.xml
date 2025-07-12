@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase xmlns:con="http://eviware.com/soapui/config" id="f88fb00c-49d0-411c-a3f3-a1bb78a783ea" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TC01_SupplierByZipCode" searchProperties="true">
+  <con:settings>
+    <con:setting id="f88fb00c-49d0-411c-a3f3-a1bb78a783eafileName">TC01_SupplierByZipCode</con:setting>
+  </con:settings>
+  <con:testStep type="request" id="9b347939-5d41-4d65-9c6e-9d616cc3f53b" name="GetSupplierByZipCode - Request">
+    <con:settings/>
+    <con:config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="con:RequestStep">
+      <con:interface>medicareSupplierServiceSoapBinding</con:interface>
+      <con:operation>GetSupplierByZipCode</con:operation>
+      <con:request name="GetSupplierByZipCode - Request" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="0f6d5cc9-4114-40d4-a112-0e21faddda98">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>http://localhost:8080/services/medicareSupplierService</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.webservicex.net/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <web:GetSupplierByZipCode>\r
+         <!--Optional:-->\r
+         <web:zip>75070</web:zip>\r
+      </web:GetSupplierByZipCode>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="98b6363b-cfca-4090-b450-9184b2c173b7" name="SOAP Response"/>
+        <con:assertion type="XPath Match" id="cb6af526-d67d-47f3-9903-87f58a09b27f" name="Count of Suppliers should be ZERO when zipcode != 75070">
+          <con:configuration>
+            <path>declare namespace soap='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace ns1='http://www.webservicex.net/';
+count(//ns1:GetSupplierByZipCodeResponse/ns1:SupplierDataLists/ns1:SupplierDatas/ns1:SupplierData[ns1:ZipPlus4!='75070'])</path>
+            <content>0</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XQuery Match" id="6bd4ad5d-278d-4abe-aa96-623720eb3048" name="XQuery Match">
+          <con:configuration>
+            <path><![CDATA[declare namespace soap='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace ns1='http://www.webservicex.net/';
+<suppliers>
+{
+for $supplier in //ns1:SupplierData
+return <supplier>
+<supplierNo>{data($supplier/ns1:SupplierNumber/text()) } </supplierNo>
+<city>{data($supplier/ns1:City/text()) } </city>
+</supplier>
+}
+</suppliers>]]></path>
+            <content><![CDATA[<suppliers>
+  <supplier>
+    <supplierNo>0191800001</supplierNo>
+    <city>MCKINNEY</city>
+  </supplier>
+  <supplier>
+    <supplierNo>0282932325</supplierNo>
+    <city>MC KINNEY</city>
+  </supplier>
+  <supplier>
+    <supplierNo>0483390908</supplierNo>
+    <city>MC KINNEY</city>
+  </supplier>
+  <supplier>
+    <supplierNo>0879960004</supplierNo>
+    <city>MCKINNEY</city>
+  </supplier>
+  <supplier>
+    <supplierNo>1012120023</supplierNo>
+    <city>MC KINNEY</city>
+  </supplier>
+  <supplier>
+    <supplierNo>1195882590</supplierNo>
+    <city>MC KINNEY</city>
+  </supplier>
+  <supplier>
+    <supplierNo>1307140137</supplierNo>
+    <city>MC KINNEY</city>
+  </supplier>
+  <supplier>
+    <supplierNo>4077810037</supplierNo>
+    <city>MCKINNEY</city>
+  </supplier>
+  <supplier>
+    <supplierNo>4360370322</supplierNo>
+    <city>MCKINNEY</city>
+  </supplier>
+  <supplier>
+    <supplierNo>4691680001</supplierNo>
+    <city>MCKINNEY</city>
+  </supplier>
+  <supplier>
+    <supplierNo>4781330001</supplierNo>
+    <city>MCKINNEY</city>
+  </supplier>
+  <supplier>
+    <supplierNo>4924500001</supplierNo>
+    <city>MCKINNEY</city>
+  </supplier>
+</suppliers>]]></content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.webservicex.net/GetSupplierByZipCode"/>
+        <con:wsrmConfig version="1.2"/>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testCase>

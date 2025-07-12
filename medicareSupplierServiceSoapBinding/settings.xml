@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config" xsi:type="con:WsdlInterface" id="035bbbe9-12f6-4182-8533-040a8c68ac91" wsaVersion="NONE" name="medicareSupplierServiceSoapBinding" type="wsdl" bindingName="{http://www.springframework.org/schema/beans}medicareSupplierServiceSoapBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:8080/services/medicareSupplierService?wsdl">
+  <con:settings>
+    <con:setting id="035bbbe9-12f6-4182-8533-040a8c68ac91fileName">medicareSupplierServiceSoapBinding</con:setting>
+  </con:settings>
+  <con:definitionCache type="TEXT" rootPart="http://localhost:8080/services/medicareSupplierService?wsdl">
+    <con:part>
+      <con:url>http://localhost:8080/services/medicareSupplierService?wsdl</con:url>
+      <con:content><![CDATA[<wsdl:definitions name="medicareSupplierService" targetNamespace="http://www.springframework.org/schema/beans" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.springframework.org/schema/beans" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns2="http://schemas.xmlsoap.org/soap/http" xmlns:ns1="http://www.webservicex.net/">
+  <wsdl:import location="http://localhost:8080/services/medicareSupplierService?wsdl=MediCareSupplierSoap.wsdl" namespace="http://www.webservicex.net/"></wsdl:import>
+  <wsdl:binding name="medicareSupplierServiceSoapBinding" type="ns1:MediCareSupplierSoap">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetSupplierByZipCode">
+      <soap:operation soapAction="http://www.webservicex.net/GetSupplierByZipCode" style="document"/>
+      <wsdl:input name="GetSupplierByZipCode">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetSupplierByZipCodeResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSupplierByCity">
+      <soap:operation soapAction="http://www.webservicex.net/GetSupplierByCity" style="document"/>
+      <wsdl:input name="GetSupplierByCity">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetSupplierByCityResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSupplierBySupplyType">
+      <soap:operation soapAction="http://www.webservicex.net/GetSupplierBySupplyType" style="document"/>
+      <wsdl:input name="GetSupplierBySupplyType">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetSupplierBySupplyTypeResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="medicareSupplierService">
+    <wsdl:port binding="tns:medicareSupplierServiceSoapBinding" name="$Proxy88Port">
+      <soap:address location="http://localhost:8080/services/medicareSupplierService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content>
+      <con:type>http://schemas.xmlsoap.org/wsdl/</con:type>
+    </con:part>
+    <con:part>
+      <con:url>http://localhost:8080/services/medicareSupplierService?wsdl=MediCareSupplierSoap.wsdl</con:url>
+      <con:content><![CDATA[<wsdl:definitions name="MediCareSupplierSoap" targetNamespace="http://www.webservicex.net/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns1="http://www.webservicex.net/">
+  <wsdl:types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://www.webservicex.net/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.webservicex.net/">
+      <xs:element name="GetSupplierByCity">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="City" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetSupplierByCityResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="GetSupplierByCityResult" type="xs:boolean"/>
+            <xs:element name="SupplierDataLists" type="tns:SupplierDataList"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetSupplierBySupplyType">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="description" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetSupplierBySupplyTypeResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="GetSupplierBySupplyTypeResult" type="xs:boolean"/>
+            <xs:element name="SupplierDataLists" type="tns:SupplierDataList"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetSupplierByZipCode">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="zip" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetSupplierByZipCodeResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="GetSupplierByZipCodeResult" type="xs:boolean"/>
+            <xs:element name="SupplierDataLists" type="tns:SupplierDataList"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="SupplierDataList">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="SupplierDatas" type="tns:ArrayOfSupplierData"/>
+          <xs:element name="TotalRecords" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ArrayOfSupplierData">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="SupplierData" type="tns:SupplierData"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="SupplierData">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="SupplierNumber" type="xs:string"/>
+          <xs:element minOccurs="0" name="CompanyName" type="xs:string"/>
+          <xs:element minOccurs="0" name="Address1" type="xs:string"/>
+          <xs:element minOccurs="0" name="Address2" type="xs:string"/>
+          <xs:element minOccurs="0" name="City" type="xs:string"/>
+          <xs:element minOccurs="0" name="State" type="xs:string"/>
+          <xs:element minOccurs="0" name="Zip" type="xs:string"/>
+          <xs:element minOccurs="0" name="ZipPlus4" type="xs:string"/>
+          <xs:element minOccurs="0" name="Telephone" type="xs:string"/>
+          <xs:element minOccurs="0" name="Description" type="xs:string"/>
+          <xs:element minOccurs="0" name="IsSupplierParticipating" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="GetSupplierByZipCode">
+    <wsdl:part element="ns1:GetSupplierByZipCode" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetSupplierBySupplyType">
+    <wsdl:part element="ns1:GetSupplierBySupplyType" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetSupplierByZipCodeResponse">
+    <wsdl:part element="ns1:GetSupplierByZipCodeResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetSupplierByCity">
+    <wsdl:part element="ns1:GetSupplierByCity" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetSupplierBySupplyTypeResponse">
+    <wsdl:part element="ns1:GetSupplierBySupplyTypeResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetSupplierByCityResponse">
+    <wsdl:part element="ns1:GetSupplierByCityResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="MediCareSupplierSoap">
+    <wsdl:operation name="GetSupplierByZipCode">
+      <wsdl:input message="ns1:GetSupplierByZipCode" name="GetSupplierByZipCode"></wsdl:input>
+      <wsdl:output message="ns1:GetSupplierByZipCodeResponse" name="GetSupplierByZipCodeResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSupplierByCity">
+      <wsdl:input message="ns1:GetSupplierByCity" name="GetSupplierByCity"></wsdl:input>
+      <wsdl:output message="ns1:GetSupplierByCityResponse" name="GetSupplierByCityResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSupplierBySupplyType">
+      <wsdl:input message="ns1:GetSupplierBySupplyType" name="GetSupplierBySupplyType"></wsdl:input>
+      <wsdl:output message="ns1:GetSupplierBySupplyTypeResponse" name="GetSupplierBySupplyTypeResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>]]></con:content>
+      <con:type>http://schemas.xmlsoap.org/wsdl/</con:type>
+    </con:part>
+  </con:definitionCache>
+  <con:endpoints>
+    <con:endpoint>http://localhost:8080/services/medicareSupplierService</con:endpoint>
+  </con:endpoints>
+</con:interface>

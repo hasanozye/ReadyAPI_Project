@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testSuite xmlns:con="http://eviware.com/soapui/config" id="40cb6426-7ab2-4ac7-a69d-ab27a08a73a8" name="TS04 test suite for suppleir service">
+  <con:settings>
+    <con:setting id="40cb6426-7ab2-4ac7-a69d-ab27a08a73a8fileName">TS04-test-suite-for-suppleir-service</con:setting>
+  </con:settings>
+  <con:runType>SEQUENTIAL</con:runType>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testSuite>
