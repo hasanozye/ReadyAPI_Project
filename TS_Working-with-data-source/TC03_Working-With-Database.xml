@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase xmlns:con="http://eviware.com/soapui/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="0118d9c5-2923-4d42-965b-9c4f7f250488" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="TC03_Working With Database" searchProperties="true" timeout="0">
+  <con:settings>
+    <con:setting id="0118d9c5-2923-4d42-965b-9c4f7f250488fileName">TC03_Working-With-Database</con:setting>
+  </con:settings>
+  <con:testStep type="datasource" name="Data Source - MySQL" id="c1353604-739f-4560-bacc-a54177ce8a98">
+    <con:settings>
+      <con:setting id="com.eviware.soapui.impl.wsdl.teststeps.datasource.DataSourceContainer@prepared-properties">&lt;xml-fragment/></con:setting>
+    </con:settings>
+    <con:config xsi:type="con:DataSourceStep">
+      <con:dataSource type="JDBC">
+        <con:configuration>
+          <driver>com.mysql.cj.jdbc.Driver</driver>
+          <connstr>jdbc:mysql://127.0.0.1:3306/demo?user=root&amp;password=1234 </connstr>
+          <pass>1234</pass>
+          <Connection/>
+          <query>Select blz_data1.blz_code as blz_data1_blz_code,
+  blz_data1.bic_code as blz_data1_bic_code,
+  blz_data1.ort as blz_data1_ort,
+  blz_data1.plz as blz_data1_plz,
+  blz_data1.bezeichnung as blz_data1_bezeichnung
+From blz_data blz_data1</query>
+          <fetchSize/>
+          <stored-procedure>false</stored-procedure>
+        </con:configuration>
+      </con:dataSource>
+      <con:shared>true</con:shared>
+      <con:restartShared>true</con:restartShared>
+      <con:property>blz_data1_blz_code</con:property>
+      <con:property>blz_data1_bic_code</con:property>
+      <con:property>blz_data1_ort</con:property>
+      <con:property>blz_data1_plz</con:property>
+      <con:property>blz_data1_bezeichnung</con:property>
+      <con:completeLastOperation>true</con:completeLastOperation>
+      <con:restartOnRun>true</con:restartOnRun>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" id="f03b45d8-3322-4f03-85c1-603d662bec40" name="getBank">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep">
+      <con:interface>blzServiceSoapBinding</con:interface>
+      <con:operation>getBank</con:operation>
+      <con:request name="getBank" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="a6c16e39-85d9-45cc-9574-c92bf47eb5a9">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>http://localhost:8080/services/blzService</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:blz="http://thomas-bayer.com/blz/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <blz:getBank>
+         <blz:blz>${Data Source - MySQL#blz_data1_blz_code}</blz:blz>
+      </blz:getBank>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="Valid HTTP Status Codes" id="44165dca-3e90-454d-9723-d89ce539e7ec" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Response SLA Assertion" id="24b57993-8dd2-47c4-aa79-1f8e8174e796" name="Response SLA">
+          <con:configuration>
+            <SLA>200</SLA>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="SOAP Fault Assertion" id="8873349e-a0c6-45c8-a632-f7c2206273ae" name="Not SOAP Fault"/>
+        <con:assertion type="Schema Compliance" id="50eeb068-9a45-4ec6-a0b9-a451a7474459" name="Schema Compliance">
+          <con:configuration/>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.springframework.org/schema/beans/BLZServicePortType/getBank"/>
+        <con:wsrmConfig version="1.2"/>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="datasourceloop" name="Data Source Loop" id="503f8f97-9545-48e8-b74b-6ee8199e6934">
+    <con:settings/>
+    <con:config>
+      <dataSourceStep>Data Source - MySQL</dataSourceStep>
+      <targetStep>getBank</targetStep>
+      <discardResults>true</discardResults>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testCase>

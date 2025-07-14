@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config" id="0eed4e79-e184-43b3-8e92-dc69146ab79d" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="TC02_Working With Excel" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" zephyrTestName="" zephyrTestId="">
+  <con:settings>
+    <con:setting id="0eed4e79-e184-43b3-8e92-dc69146ab79dfileName">TC02_Working-With-Excel</con:setting>
+  </con:settings>
+  <con:testStep type="datasource" name="DataSource-Excel" id="de41c964-b13f-4f3f-a9cb-93b99237f0d7">
+    <con:settings/>
+    <con:config xsi:type="con:DataSourceStep">
+      <con:dataSource type="Excel">
+        <con:configuration>
+          <file>C:/Users/hozyer/OneDrive - ONFTECH/Desktop/ivirzivir/soapui/BLZService.xls</file>
+          <worksheet/>
+          <cell>A2</cell>
+          <ignoreEmpty>false</ignoreEmpty>
+          <evaluateFormulas>false</evaluateFormulas>
+        </con:configuration>
+      </con:dataSource>
+      <con:shared>true</con:shared>
+      <con:restartShared>true</con:restartShared>
+      <con:property>BLZ Code</con:property>
+      <con:property>bezeichnung</con:property>
+      <con:property>bic</con:property>
+      <con:property>ort</con:property>
+      <con:property>plz</con:property>
+      <con:completeLastOperation>true</con:completeLastOperation>
+      <con:restartOnRun>true</con:restartOnRun>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" id="f1ef0368-14e8-4c4c-b322-6e170ba34280" name="getBank">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep">
+      <con:interface>blzServiceSoapBinding</con:interface>
+      <con:operation>getBank</con:operation>
+      <con:request name="getBank" id="74fb20b4-e646-44ab-a02c-bc39406472da">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>http://localhost:8080/services/blzService</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:blz="http://thomas-bayer.com/blz/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <blz:getBank>
+         <blz:blz>${DataSource-Excel#BLZ Code}</blz:blz>
+      </blz:getBank>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="Valid HTTP Status Codes" id="4c485b70-82ee-4321-9f07-f1c2108b6dba" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="SOAP Fault Assertion" id="3d09e159-b997-4639-8b52-d1cbcebd7dec" name="Not SOAP Fault"/>
+        <con:assertion type="Schema Compliance" id="2df4c05e-b76a-41d9-932e-e3416d39c19a" name="Schema Compliance">
+          <con:configuration/>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="cc5dc636-005c-4289-9cb0-a9c91274a990" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://thomas-bayer.com/blz/';
+//ns1:getBankResponse[1]/ns1:details[1]/ns1:bic[1]</path>
+            <content>${DataSource-Excel#bic}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" name="Validate bezeichnung" id="6fab1b7a-f9d9-405e-b206-d2d966f49799">
+          <con:configuration>
+            <path>declare namespace ns1='http://thomas-bayer.com/blz/';
+//ns1:getBankResponse[1]/ns1:details[1]/ns1:bezeichnung[1]</path>
+            <content>${DataSource-Excel#bezeichnung}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig action="http://www.springframework.org/schema/beans/BLZServicePortType/getBank" mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Groovy Script - Req and Response Body" id="a693499f-d276-4039-abe6-bed49d8ac974">
+    <con:settings/>
+    <con:config>
+      <script>def requestBody = context.testCase.testSteps["getBank"].testRequest.requestContent
+def responseBody = context.testCase.testSteps["getBank"].testRequest.responseContent
+
+log.info "=== REQUEST === \n$requestBody"
+log.info "=== RESPONSE === \n$responseBody"</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="datasourceloop" name="Data Source Loop" id="52c0b82e-5c7a-4bc8-85cc-caa01d02cd35">
+    <con:settings/>
+    <con:config>
+      <dataSourceStep>DataSource-Grid</dataSourceStep>
+      <targetStep>getBank</targetStep>
+      <discardResults>true</discardResults>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>586337fd-7af1-4f44-94ec-9611f41d39a9</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>0e07c3b0-1d90-411e-a8f6-a07ac49501d8</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>225b678b-afa3-4bfe-8b45-28a5334207cf</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

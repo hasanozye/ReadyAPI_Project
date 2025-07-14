@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase xmlns:con="http://eviware.com/soapui/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="9d33122d-e2ac-4a98-b53f-71911e266c3f" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="TC04_Working With Datagen" searchProperties="true" timeout="0">
+  <con:settings>
+    <con:setting id="9d33122d-e2ac-4a98-b53f-71911e266c3ffileName">TC04_Working-With-Datagen</con:setting>
+  </con:settings>
+  <con:testStep type="datagen" name="DataGen" id="984a4045-e782-4d40-bc08-4eac721fe192">
+    <con:settings/>
+    <con:config xsi:type="con:DataGeneratorStep">
+      <con:property type="List">
+        <con:configuration>
+          <value>Qatar</value>
+          <value>Netherlands</value>
+          <value>Germany</value>
+          <value>Belgium</value>
+          <value>USA</value>
+          <random>true</random>
+        </con:configuration>
+        <con:name>country_name</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+      <con:property type="Number">
+        <con:configuration>
+          <start>1000</start>
+          <end>9999</end>
+          <step>1</step>
+          <pattern/>
+          <random>true</random>
+          <persist>true</persist>
+          <current>3489.00000000000000000000000000000000000000000000000000000</current>
+        </con:configuration>
+        <con:name>seq_no</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+      <con:property type="Script">
+        <con:configuration>
+          <script>import java.util.Date
+Date today = new Date();
+return today</script>
+        </con:configuration>
+        <con:name>Today_Date</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+      <con:property type="Template">
+        <con:configuration>
+          <template>Order has been sent for order number ${DataGen#Seq_no}</template>
+          <entitize>false</entitize>
+        </con:configuration>
+        <con:name>comments</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testCase>

@@ -13,3 +13,7 @@ TS_06-Groovy-Automation\TC01_to-test-getBank-operation.xml
 TS_06-Groovy-Automation\TC02_-Data-driven-testing-using-groovy.xml
 TS_Learning-Groovy-Script\TC_writing-methods-in-groovy.xml
 TS_Working-with-data-source\TC01_Working-With-Grid.xml
+TS_Working-with-data-source\TC02_Working-With-Excel.xml
+TS_Working-with-data-source\TC03_Working-With-Database.xml
+TS_Working-with-data-source\TC04_Working-With-Datagen.xml
+TS_Working-with-data-source\TC05_Working-With-Datasink.xml

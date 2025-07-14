@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase xmlns:con="http://eviware.com/soapui/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="9b28c035-4504-4bf0-b822-a776ae5324e2" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="TC05_Working With Datasink" searchProperties="true" timeout="0">
+  <con:settings>
+    <con:setting id="9b28c035-4504-4bf0-b822-a776ae5324e2fileName">TC05_Working-With-Datasink</con:setting>
+  </con:settings>
+  <con:testStep type="request" id="8eb5aacb-3a7d-4d9a-9b31-054d0ce566e0" name="getBank">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep">
+      <con:interface>blzServiceSoapBinding</con:interface>
+      <con:operation>getBank</con:operation>
+      <con:request name="getBank" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="9fb64bee-409e-4c5d-9de0-29d809f61f94">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>http://localhost:8080/services/blzService</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:blz="http://thomas-bayer.com/blz/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <blz:getBank>
+         <blz:blz>55010111</blz:blz>
+      </blz:getBank>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="Valid HTTP Status Codes" id="c5758ecb-9a43-4b4c-bdd2-c1ea7f7fbc93" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Response SLA Assertion" id="bb937fd6-9324-4b66-9c8f-1c5c421375ed" name="Response SLA">
+          <con:configuration>
+            <SLA>200</SLA>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="SOAP Fault Assertion" id="241120aa-da7f-4aea-b495-c01c4ad175a9" name="Not SOAP Fault"/>
+        <con:assertion type="Schema Compliance" id="3417a122-a01f-4653-8db5-8f40c7039034" name="Schema Compliance">
+          <con:configuration/>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.springframework.org/schema/beans/BLZServicePortType/getBank"/>
+        <con:wsrmConfig version="1.2"/>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="datasink" name="Data Sink" id="e63b0831-f940-4ce9-a76b-7efa10602495">
+    <con:settings/>
+    <con:config xsi:type="con:DataSinkStep">
+      <con:dataSink type="File">
+        <con:configuration>
+          <fileName>C:/Users/hozyer/OneDrive - ONFTECH/Documents/bankservice_output.txt</fileName>
+          <separator>,</separator>
+          <escape>"</escape>
+          <quote>false</quote>
+          <trim>true</trim>
+          <append>true</append>
+          <encoding>Cp1252</encoding>
+        </con:configuration>
+      </con:dataSink>
+      <con:properties>
+        <con:property>
+          <con:name>blz_code</con:name>
+          <con:value>${getBank#Request#declare namespace blz='http://thomas-bayer.com/blz/'; //blz:getBank[1]/blz:blz[1]}</con:value>
+        </con:property>
+        <con:property>
+          <con:name>bic</con:name>
+          <con:value>${getBank#Response#declare namespace ns1='http://thomas-bayer.com/blz/'; //ns1:getBankResponse[1]/ns1:details[1]/ns1:bic[1]}</con:value>
+        </con:property>
+        <con:property>
+          <con:name>bezeichnung</con:name>
+          <con:value>${getBank#Response#declare namespace ns1='http://thomas-bayer.com/blz/'; //ns1:getBankResponse[1]/ns1:details[1]/ns1:bezeichnung[1]}</con:value>
+        </con:property>
+      </con:properties>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testCase>
