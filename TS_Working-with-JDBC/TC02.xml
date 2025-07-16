@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase xmlns:con="http://eviware.com/soapui/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="3f909cee-3231-4da5-a9ef-22c9b7e7b005" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="TC02" searchProperties="true" timeout="0">
+  <con:settings>
+    <con:setting id="3f909cee-3231-4da5-a9ef-22c9b7e7b005fileName">TC02</con:setting>
+  </con:settings>
+  <con:testStep type="jdbc" name="JDBC Request" id="dafa0eae-54d5-4758-b1a4-2d0e45c9a38b">
+    <con:settings>
+      <con:setting id="prettyPrintResponse">true</con:setting>
+    </con:settings>
+    <con:config xsi:type="con:JdbcRequestTestStep" convertColumnNamesToUpperCase="true">
+      <con:dbConnectionName xsi:nil="true"/>
+      <con:driver>com.mysql.cj.jdbc.Driver</con:driver>
+      <con:connectionString>jdbc:mysql://127.0.0.1:3306/demo?user=root&amp;password=1234 </con:connectionString>
+      <con:connectionProperties/>
+      <con:query>Select blz_data.blz_code,
+  blz_data.bic_code,
+  blz_data.bezeichnung,
+  blz_data.ort,
+  blz_data.plz
+From blz_data</con:query>
+      <con:properties/>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" id="afd2fb2a-b2bc-4e6c-beac-63f4fec319c2" name="getBank">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep">
+      <con:interface>blzServiceSoapBinding</con:interface>
+      <con:operation>getBank</con:operation>
+      <con:request name="getBank" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="a04f48dd-fa4f-4a40-906b-617c3a962ae3">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>http://localhost:8080/services/blzService</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:blz="http://thomas-bayer.com/blz/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <blz:getBank>
+         <blz:blz>${JDBC Request#ResponseAsXml#//Results[1]/ResultSet[1]/Row[4]/BLZ_DATA.BLZ_CODE[1]}</blz:blz>
+      </blz:getBank>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="5bd07bff-f727-4d5b-8382-e5da356919b4" name="SOAP Response"/>
+        <con:assertion type="XPath Match" id="cb998479-dc57-4f4d-8858-548890b5f8eb" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://thomas-bayer.com/blz/';
+//ns1:getBankResponse[1]/ns1:details[1]/ns1:bic[1]</path>
+            <content>${JDBC Request#ResponseAsXml#//Results[1]/ResultSet[1]/Row[4]/BLZ_DATA.BEZEICHNUNG[1]}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.springframework.org/schema/beans/BLZServicePortType/getBank"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="c989831c-ac11-4657-86d0-58a96c1255b0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="fb09047e-b9fc-4917-87fb-d9dd5dd96193">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+  <con:environmentSpec>
+    <con:entry environmentId="c989831c-ac11-4657-86d0-58a96c1255b0">
+      <con:authProfile>Inherit From Parent</con:authProfile>
+    </con:entry>
+    <con:entry environmentId="fb09047e-b9fc-4917-87fb-d9dd5dd96193">
+      <con:authProfile>Inherit From Parent</con:authProfile>
+    </con:entry>
+  </con:environmentSpec>
+</con:testCase>

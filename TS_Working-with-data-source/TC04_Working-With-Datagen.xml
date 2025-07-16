@@ -27,7 +27,7 @@
           <pattern/>
           <random>true</random>
           <persist>true</persist>
-          <current>3489.00000000000000000000000000000000000000000000000000000</current>
+          <current>6340.00000000000000000000000000000000000000000000000000000</current>
         </con:configuration>
         <con:name>seq_no</con:name>
         <con:mode>STEP</con:mode>

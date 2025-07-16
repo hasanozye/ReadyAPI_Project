@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase xmlns:con="http://eviware.com/soapui/config" id="cfb3352e-ef6e-4fb1-a824-5705d64ad18e" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TC01" searchProperties="true">
+  <con:settings>
+    <con:setting id="cfb3352e-ef6e-4fb1-a824-5705d64ad18efileName">TC01</con:setting>
+  </con:settings>
+  <con:testStep type="jdbc" name="JDBC Request" id="5bdbcdfc-2044-4e20-8448-a23e49374fc4">
+    <con:settings>
+      <con:setting id="prettyPrintResponse">true</con:setting>
+    </con:settings>
+    <con:config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="con:JdbcRequestTestStep" convertColumnNamesToUpperCase="true">
+      <con:driver>com.mysql.cj.jdbc.Driver</con:driver>
+      <con:connectionString>jdbc:mysql://localhost:3306/demo?user=root&amp;password=1234</con:connectionString>
+      <con:connectionProperties/>
+      <con:query>SELECT * FROM blz_data</con:query>
+      <con:properties/>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Property Transfer" id="98be79f2-610d-4a23-b977-abdf848d6cad">
+    <con:settings/>
+    <con:config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="con:PropertyTransfersStep">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>transfer_blz</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>JDBC Request</con:sourceStep>
+        <con:sourcePath>//Results/ResultSet/Row[1]/BLZ_DATA.BLZ_CODE</con:sourcePath>
+        <con:targetType>Request</con:targetType>
+        <con:targetStep>getBank</con:targetStep>
+        <con:targetPath>declare namespace soap='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace ns1='http://www.springframework.org/schema/beans';
+declare namespace ns2='http://thomas-bayer.com/blz/';
+
+//ns2:getBank/ns2:blz
+
+</con:targetPath>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" id="19d32fab-a5fb-4512-b475-d3771d6e3316" name="getBank">
+    <con:settings/>
+    <con:config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="con:RequestStep">
+      <con:interface>blzServiceSoapBinding</con:interface>
+      <con:operation>getBank</con:operation>
+      <con:request name="getBank" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="66a9f221-a1c1-499c-85d0-18d6292fb6c1">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>http://localhost:8080/services/blzService</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:blz="http://thomas-bayer.com/blz/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <blz:getBank>
+         <blz:blz>55010111</blz:blz>
+      </blz:getBank>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="83a0b278-2a75-4faf-a47f-4722a00fd730" name="SOAP Response"/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.springframework.org/schema/beans/BLZServicePortType/getBank"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="c989831c-ac11-4657-86d0-58a96c1255b0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="fb09047e-b9fc-4917-87fb-d9dd5dd96193">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+  <con:environmentSpec>
+    <con:entry environmentId="c989831c-ac11-4657-86d0-58a96c1255b0">
+      <con:authProfile>Inherit From Parent</con:authProfile>
+    </con:entry>
+    <con:entry environmentId="fb09047e-b9fc-4917-87fb-d9dd5dd96193">
+      <con:authProfile>Inherit From Parent</con:authProfile>
+    </con:entry>
+  </con:environmentSpec>
+</con:testCase>

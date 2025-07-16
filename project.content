@@ -17,3 +17,5 @@ TS_Working-with-data-source\TC02_Working-With-Excel.xml
 TS_Working-with-data-source\TC03_Working-With-Database.xml
 TS_Working-with-data-source\TC04_Working-With-Datagen.xml
 TS_Working-with-data-source\TC05_Working-With-Datasink.xml
+TS_Working-with-JDBC\TC01.xml
+TS_Working-with-JDBC\TC02.xml

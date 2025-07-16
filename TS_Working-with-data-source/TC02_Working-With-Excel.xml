@@ -98,7 +98,7 @@ log.info "=== RESPONSE === \n$responseBody"</script>
   <con:testStep type="datasourceloop" name="Data Source Loop" id="52c0b82e-5c7a-4bc8-85cc-caa01d02cd35">
     <con:settings/>
     <con:config>
-      <dataSourceStep>DataSource-Grid</dataSourceStep>
+      <dataSourceStep>DataSource-Excel</dataSourceStep>
       <targetStep>getBank</targetStep>
       <discardResults>true</discardResults>
     </con:config>
